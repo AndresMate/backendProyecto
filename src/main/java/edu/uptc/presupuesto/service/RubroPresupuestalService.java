@@ -1,38 +1,51 @@
 package edu.uptc.presupuesto.service;
 
 import edu.uptc.presupuesto.model.RubroPresupuestal;
-import edu.uptc.presupuesto.model.EstadoRubro;
+import edu.uptc.presupuesto.dto.RubroPresupuestalDTO;
 import edu.uptc.presupuesto.repository.RubroPresupuestalRepository;
+import edu.uptc.presupuesto.mapper.RubroPresupuestalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RubroPresupuestalService {
     @Autowired
     private RubroPresupuestalRepository repository;
 
-    public RubroPresupuestal crearRubro(RubroPresupuestal rubro) {
-        // Validaciones antes de guardar
+    @Autowired
+    private RubroPresupuestalMapper mapper;
+
+    public RubroPresupuestalDTO crearRubro(RubroPresupuestalDTO rubroDTO) {
+        RubroPresupuestal rubro = mapper.toEntity(rubroDTO);
+
         if (rubro.getFechaInicio() == null) {
             rubro.setFechaInicio(LocalDate.now());
         }
-        rubro.setEstado(EstadoRubro.PENDIENTE);
+        rubro.setEstado(RubroPresupuestal.EstadoRubro.PENDIENTE);
         rubro.setPresupuestoEjecutado(BigDecimal.ZERO);
 
-        return repository.save(rubro);
+        RubroPresupuestal savedRubro = repository.save(rubro);
+        return mapper.toDTO(savedRubro);
     }
 
-    public List<RubroPresupuestal> obtenerRubrosProximosAVencer() {
+    public List<RubroPresupuestalDTO> obtenerRubrosProximosAVencer() {
         LocalDate fechaProximoVencimiento = LocalDate.now().plusMonths(1);
-        return repository.findRubrosProximosAVencer(fechaProximoVencimiento);
+        return repository.findRubrosProximosAVencer(fechaProximoVencimiento)
+                .stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<RubroPresupuestal> obtenerRubrosCasiAgotados() {
-        return repository.findRubrosCasiAgotados();
+    public List<RubroPresupuestalDTO> obtenerRubrosCasiAgotados() {
+        return repository.findRubrosCasiAgotados()
+                .stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     public void actualizarEjecucionPresupuestal(Long rubroId, BigDecimal montoEjecutado) {
@@ -42,9 +55,8 @@ public class RubroPresupuestalService {
         BigDecimal nuevoPresupuestoEjecutado = rubro.getPresupuestoEjecutado().add(montoEjecutado);
         rubro.setPresupuestoEjecutado(nuevoPresupuestoEjecutado);
 
-        // Actualizar estado si se ha ejecutado más del 90% del presupuesto
         if (nuevoPresupuestoEjecutado.divide(rubro.getPresupuestoTotal()).compareTo(BigDecimal.valueOf(0.9)) >= 0) {
-            rubro.setEstado(EstadoRubro.SOBREPASADO);
+            rubro.setEstado(RubroPresupuestal.EstadoRubro.SOBREPASADO);
         }
 
         repository.save(rubro);

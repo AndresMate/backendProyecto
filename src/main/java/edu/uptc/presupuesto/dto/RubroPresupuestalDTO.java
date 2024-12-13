@@ -1,42 +1,22 @@
-package edu.uptc.presupuesto.model;
+package edu.uptc.presupuesto.dto;
 
 import edu.uptc.presupuesto.model.EstadoRubro;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "rubros_presupuestales")
-public class RubroPresupuestal {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class RubroPresupuestalDTO {
     private Long id;
-
-    @NotBlank(message = "El nombre del rubro es obligatorio")
-    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
-    @Column(nullable = false, length = 100)
     private String nombre;
-
-    @NotNull(message = "El presupuesto total es obligatorio")
-    @Positive(message = "El presupuesto total debe ser mayor a cero")
-    @Column(name = "presupuesto_total", nullable = false, precision = 19, scale = 2)
     private BigDecimal presupuestoTotal;
-
-    @Column(name = "presupuesto_ejecutado", precision = 19, scale = 2)
-    private BigDecimal presupuestoEjecutado = BigDecimal.ZERO;
-
-    @Column(name = "fecha_inicio")
+    private BigDecimal presupuestoEjecutado;
     private LocalDate fechaInicio;
-
-    @Column(name = "fecha_fin")
     private LocalDate fechaFin;
+    private EstadoRubro estado;
+    private BigDecimal porcentajeEjecucion;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private EstadoRubro estado = EstadoRubro.PENDIENTE;
+    // Constructores
+    public RubroPresupuestalDTO() {}
 
-    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -93,13 +73,26 @@ public class RubroPresupuestal {
         this.estado = estado;
     }
 
-    // Método para calcular porcentaje de ejecución
     public BigDecimal getPorcentajeEjecucion() {
-        if (presupuestoTotal.compareTo(BigDecimal.ZERO) == 0) {
-            return BigDecimal.ZERO;
-        }
-        return presupuestoEjecutado.divide(presupuestoTotal, 4, BigDecimal.ROUND_HALF_UP)
-                .multiply(BigDecimal.valueOf(100));
+        return porcentajeEjecucion;
+    }
+
+    public void setPorcentajeEjecucion(BigDecimal porcentajeEjecucion) {
+        this.porcentajeEjecucion = porcentajeEjecucion;
+    }
+
+    // Método toString
+    @Override
+    public String toString() {
+        return "RubroPresupuestalDTO{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", presupuestoTotal=" + presupuestoTotal +
+                ", presupuestoEjecutado=" + presupuestoEjecutado +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", estado=" + estado +
+                ", porcentajeEjecucion=" + porcentajeEjecucion +
+                '}';
     }
 }
-

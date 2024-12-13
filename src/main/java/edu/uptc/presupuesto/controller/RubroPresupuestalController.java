@@ -1,6 +1,6 @@
 package edu.uptc.presupuesto.controller;
 
-import edu.uptc.presupuesto.model.RubroPresupuestal;
+import edu.uptc.presupuesto.dto.RubroPresupuestalDTO;
 import edu.uptc.presupuesto.service.RubroPresupuestalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,19 +20,19 @@ public class RubroPresupuestalController {
 
     @PostMapping
     @Operation(summary = "Crear un nuevo rubro presupuestal")
-    public ResponseEntity<RubroPresupuestal> crearRubro(@RequestBody RubroPresupuestal rubro) {
+    public ResponseEntity<RubroPresupuestalDTO> crearRubro(@RequestBody RubroPresupuestalDTO rubro) {
         return ResponseEntity.ok(service.crearRubro(rubro));
     }
 
     @GetMapping("/proximosVencer")
     @Operation(summary = "Obtener rubros próximos a vencer")
-    public List<RubroPresupuestal> getRubrosProximosAVencer() {
+    public List<RubroPresupuestalDTO> getRubrosProximosAVencer() {
         return service.obtenerRubrosProximosAVencer();
     }
 
     @GetMapping("/casiAgotados")
     @Operation(summary = "Obtener rubros casi agotados")
-    public List<RubroPresupuestal> getRubrosCasiAgotados() {
+    public List<RubroPresupuestalDTO> getRubrosCasiAgotados() {
         return service.obtenerRubrosCasiAgotados();
     }
 
