@@ -1,4 +1,4 @@
-package edu.uptc.presupuesto.security;
+/*package edu.uptc.presupuesto.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,4 +24,4 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults()); // Habilitar autenticación básica HTTP
         return http.build();
     }
-}
+}*/
