@@ -1,5 +1,6 @@
 package edu.uptc.presupuesto.service;
 
+import edu.uptc.presupuesto.model.EstadoRubro;
 import edu.uptc.presupuesto.model.RubroPresupuestal;
 import edu.uptc.presupuesto.dto.RubroPresupuestalDTO;
 import edu.uptc.presupuesto.repository.RubroPresupuestalRepository;
@@ -26,7 +27,7 @@ public class RubroPresupuestalService {
         if (rubro.getFechaInicio() == null) {
             rubro.setFechaInicio(LocalDate.now());
         }
-        rubro.setEstado(RubroPresupuestal.EstadoRubro.PENDIENTE);
+        rubro.setEstado(EstadoRubro.PENDIENTE);
         rubro.setPresupuestoEjecutado(BigDecimal.ZERO);
 
         RubroPresupuestal savedRubro = repository.save(rubro);
@@ -56,7 +57,7 @@ public class RubroPresupuestalService {
         rubro.setPresupuestoEjecutado(nuevoPresupuestoEjecutado);
 
         if (nuevoPresupuestoEjecutado.divide(rubro.getPresupuestoTotal()).compareTo(BigDecimal.valueOf(0.9)) >= 0) {
-            rubro.setEstado(RubroPresupuestal.EstadoRubro.SOBREPASADO);
+            rubro.setEstado(EstadoRubro.SOBREPASADO);
         }
 
         repository.save(rubro);
