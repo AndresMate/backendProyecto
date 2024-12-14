@@ -1,6 +1,5 @@
 package edu.uptc.presupuesto.model;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
