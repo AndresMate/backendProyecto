@@ -26,4 +26,10 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> obtenerUsuarioPorUsername(@PathVariable String username) {
         return ResponseEntity.ok(service.obtenerUsuarioPorUsername(username));
     }
+    @GetMapping("/users")
+    @Operation(summary = "Obtener todos los usuarios")
+    public ResponseEntity<Iterable<UsuarioDTO>> obtenerUsuarios() {
+        return ResponseEntity.ok(service.obtenerUsuarios());
+    }
+
 }

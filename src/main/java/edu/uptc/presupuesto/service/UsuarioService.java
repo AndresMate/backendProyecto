@@ -25,4 +25,9 @@ public class UsuarioService {
         Usuario usuario = repository.findByUsername(username);
         return mapper.toDTO(usuario);
     }
+
+    public Iterable<UsuarioDTO> obtenerUsuarios() {
+        Iterable<Usuario> usuarios = repository.findAll();
+        return mapper.toDTOs(usuarios);
+    }
 }

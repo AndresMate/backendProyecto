@@ -4,6 +4,10 @@ import edu.uptc.presupuesto.dto.UsuarioDTO;
 import edu.uptc.presupuesto.model.Usuario;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class UsuarioMapper {
     public UsuarioDTO toDTO(Usuario usuario) {
@@ -26,5 +30,13 @@ public class UsuarioMapper {
         usuario.setActivo(dto.isActivo());
         usuario.setUltimoAcceso(dto.getUltimoAcceso());
         return usuario;
+    }
+
+    public List<UsuarioDTO> toDTOs(Iterable<Usuario> usuarios) {
+        List<Usuario> usuarioList = new ArrayList<>();
+        usuarios.forEach(usuarioList::add);
+        return usuarioList.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 }
