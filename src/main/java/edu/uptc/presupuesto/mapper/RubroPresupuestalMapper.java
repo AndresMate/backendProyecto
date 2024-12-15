@@ -1,7 +1,6 @@
 package edu.uptc.presupuesto.mapper;
 
 import edu.uptc.presupuesto.model.RubroPresupuestal;
-import edu.uptc.presupuesto.model.RubroPresupuestal.EstadoRubro;
 import edu.uptc.presupuesto.dto.RubroPresupuestalDTO;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,7 @@ public class RubroPresupuestalMapper {
         dto.setPresupuestoEjecutado(rubro.getPresupuestoEjecutado());
         dto.setFechaInicio(rubro.getFechaInicio());
         dto.setFechaFin(rubro.getFechaFin());
-        dto.setEstado(EstadoRubro.valueOf(rubro.getEstado().name()));
+        dto.setEstado(rubro.getEstado());
         dto.setPorcentajeEjecucion(rubro.getPorcentajeEjecucion());
         return dto;
     }
@@ -28,7 +27,7 @@ public class RubroPresupuestalMapper {
         rubro.setPresupuestoEjecutado(dto.getPresupuestoEjecutado());
         rubro.setFechaInicio(dto.getFechaInicio());
         rubro.setFechaFin(dto.getFechaFin());
-        rubro.setEstado(EstadoRubro.valueOf(dto.getEstado().name()));
+        rubro.setEstado(dto.getEstado());
         return rubro;
     }
 }

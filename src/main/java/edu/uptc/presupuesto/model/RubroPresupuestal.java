@@ -35,6 +35,15 @@ public class RubroPresupuestal {
     @Column(length = 20)
     private EstadoRubro estado = EstadoRubro.PENDIENTE;
 
+    @Version
+    private Long version;
+
+    public void setVersion(long l) {
+    }
+    public Long getVersion() {
+        return version;
+    }
+
     // Enum for the states of the rubro
     public enum EstadoRubro {
         PENDIENTE,

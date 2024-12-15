@@ -21,8 +21,9 @@ public class RubroPresupuestalController {
 
     @PostMapping
     @Operation(summary = "Crear un nuevo rubro presupuestal")
-    public ResponseEntity<RubroPresupuestalDTO> crearRubro(@Valid @RequestBody RubroPresupuestalDTO rubro) {
-        return ResponseEntity.ok(service.crearRubro(rubro));
+    public ResponseEntity<RubroPresupuestalDTO> crearRubro(@Valid @RequestBody RubroPresupuestalDTO rubroDTO) {
+        RubroPresupuestalDTO nuevoRubro = service.crearRubro(rubroDTO);
+        return ResponseEntity.ok(nuevoRubro);
     }
 
     @GetMapping("/proximosVencer")

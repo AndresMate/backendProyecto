@@ -29,11 +29,11 @@ public class RubroPresupuestalService {
         }
         rubro.setEstado(EstadoRubro.PENDIENTE);
         rubro.setPresupuestoEjecutado(BigDecimal.ZERO);
+        rubro.setVersion(0L); // Initialize version field
 
         RubroPresupuestal savedRubro = repository.save(rubro);
         return mapper.toDTO(savedRubro);
     }
-
     public List<RubroPresupuestalDTO> obtenerRubrosProximosAVencer() {
         LocalDate fechaProximoVencimiento = LocalDate.now().plusMonths(1);
         return repository.findRubrosProximosAVencer(fechaProximoVencimiento)
