@@ -67,4 +67,11 @@ public class AsignacionPresupuestalService {
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    public List<AsignacionPresupuestalDTO> obtenerTodasAsignaciones() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
+    }
 }

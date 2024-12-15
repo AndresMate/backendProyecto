@@ -28,4 +28,9 @@ public class AsignacionPresupuestalController {
     public List<AsignacionPresupuestalDTO> obtenerAsignacionesPorRubro(@PathVariable Long rubroId) {
         return service.obtenerAsignacionesPorRubro(rubroId);
     }
+    @GetMapping
+    @Operation(summary = "Obtener todas las asignaciones presupuestales")
+    public ResponseEntity<List<AsignacionPresupuestalDTO>> obtenerTodasAsignaciones() {
+        return ResponseEntity.ok(service.obtenerTodasAsignaciones());
+    }
 }

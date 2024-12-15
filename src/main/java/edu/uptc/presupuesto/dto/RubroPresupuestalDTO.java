@@ -1,13 +1,19 @@
 package edu.uptc.presupuesto.dto;
 
 import edu.uptc.presupuesto.model.RubroPresupuestal.EstadoRubro;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class RubroPresupuestalDTO {
     private Long id;
+
+    @NotNull(message = "El nombre es obligatorio")
     private String nombre;
+
+    @NotNull(message = "El presupuesto total es obligatorio")
     private BigDecimal presupuestoTotal;
+
     private BigDecimal presupuestoEjecutado;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;

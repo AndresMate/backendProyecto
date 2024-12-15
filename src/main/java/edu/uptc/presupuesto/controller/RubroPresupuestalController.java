@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class RubroPresupuestalController {
 
     @PostMapping
     @Operation(summary = "Crear un nuevo rubro presupuestal")
-    public ResponseEntity<RubroPresupuestalDTO> crearRubro(@RequestBody RubroPresupuestalDTO rubro) {
+    public ResponseEntity<RubroPresupuestalDTO> crearRubro(@Valid @RequestBody RubroPresupuestalDTO rubro) {
         return ResponseEntity.ok(service.crearRubro(rubro));
     }
 
@@ -73,5 +74,4 @@ public class RubroPresupuestalController {
         service.eliminarRubro(id);
         return ResponseEntity.noContent().build();
     }
-
 }

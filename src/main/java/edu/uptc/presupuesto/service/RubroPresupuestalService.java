@@ -1,10 +1,10 @@
 package edu.uptc.presupuesto.service;
 
+import edu.uptc.presupuesto.dto.RubroPresupuestalDTO;
+import edu.uptc.presupuesto.mapper.RubroPresupuestalMapper;
 import edu.uptc.presupuesto.model.RubroPresupuestal;
 import edu.uptc.presupuesto.model.RubroPresupuestal.EstadoRubro;
-import edu.uptc.presupuesto.dto.RubroPresupuestalDTO;
 import edu.uptc.presupuesto.repository.RubroPresupuestalRepository;
-import edu.uptc.presupuesto.mapper.RubroPresupuestalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +62,7 @@ public class RubroPresupuestalService {
 
         repository.save(rubro);
     }
+
     public List<RubroPresupuestalDTO> listarTodos() {
         return repository.findAll()
                 .stream()
@@ -99,5 +100,4 @@ public class RubroPresupuestalService {
         }
         repository.deleteById(id);
     }
-
 }
