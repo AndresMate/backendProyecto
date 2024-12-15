@@ -36,13 +36,7 @@ public class RubroPresupuestal {
     private EstadoRubro estado = EstadoRubro.PENDIENTE;
 
     @Version
-    private Long version;
-
-    public void setVersion(long l) {
-    }
-    public Long getVersion() {
-        return version;
-    }
+    private Long version = 0L; // Initialize version field
 
     // Enum for the states of the rubro
     public enum EstadoRubro {
@@ -107,6 +101,14 @@ public class RubroPresupuestal {
 
     public void setEstado(EstadoRubro estado) {
         this.estado = estado;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     // Method to calculate execution percentage

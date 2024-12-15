@@ -1,7 +1,8 @@
 package edu.uptc.presupuesto.mapper;
 
-import edu.uptc.presupuesto.dto.AsignacionPresupuestalDTO;
 import edu.uptc.presupuesto.model.AsignacionPresupuestal;
+import edu.uptc.presupuesto.dto.AsignacionPresupuestalDTO;
+import edu.uptc.presupuesto.model.RubroPresupuestal;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,6 +23,8 @@ public class AsignacionPresupuestalMapper {
     public AsignacionPresupuestal toEntity(AsignacionPresupuestalDTO dto) {
         AsignacionPresupuestal asignacion = new AsignacionPresupuestal();
         asignacion.setId(dto.getId());
+        asignacion.setRubro(new RubroPresupuestal());
+        asignacion.getRubro().setId(dto.getRubroId());
         asignacion.setMontoTotal(dto.getMontoTotal());
         asignacion.setMontoUtilizado(dto.getMontoUtilizado());
         asignacion.setMontoDisponible(dto.getMontoDisponible());

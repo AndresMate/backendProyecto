@@ -10,6 +10,8 @@ import edu.uptc.presupuesto.repository.AsignacionPresupuestalRepository;
 import edu.uptc.presupuesto.repository.RubroPresupuestalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class AsignacionPresupuestalService {
+    private static final Logger logger = LoggerFactory.getLogger(AsignacionPresupuestalService.class);
+
     @Autowired
     private AsignacionPresupuestalRepository repository;
 
@@ -31,12 +35,16 @@ public class AsignacionPresupuestalService {
     private AlertaRepository alertaRepository;
 
     public AsignacionPresupuestalDTO crearAsignacion(AsignacionPresupuestalDTO dto) {
+        logger.info("Creando una nueva asignación presupuestal");
         AsignacionPresupuestal asignacion = mapper.toEntity(dto);
         asignacion.setMontoUtilizado(BigDecimal.ZERO);
         asignacion.setMontoDisponible(asignacion.getMontoTotal());
 
         // Update the RubroPresupuestal
-        RubroPresupuestal rubro = rubroRepository.findById(dto.getRubroId()).orElseThrow(() -> new RuntimeException("Rubro no encontrado"));
+        RubroPresupuestal rubro = rubroRepository.findById(dto.getRubroId()).orElseThrow(() -> {
+            logger.error("Rubro no encontrado con ID: {}", dto.getRubroId());
+            return new RuntimeException("Rubro no encontrado");
+        });
         BigDecimal nuevoPresupuestoEjecutado = rubro.getPresupuestoEjecutado().add(asignacion.getMontoTotal());
 
         if (nuevoPresupuestoEjecutado.compareTo(rubro.getPresupuestoTotal()) > 0) {
@@ -47,6 +55,7 @@ public class AsignacionPresupuestalService {
         rubroRepository.save(rubro);
 
         AsignacionPresupuestal savedAsignacion = repository.save(asignacion);
+        logger.info("Asignación presupuestal creada con éxito con ID: {}", savedAsignacion.getId());
         return mapper.toDTO(savedAsignacion);
     }
 
