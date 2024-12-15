@@ -1,7 +1,7 @@
 package edu.uptc.presupuesto.mapper;
 
-import edu.uptc.presupuesto.model.EstadoRubro;
 import edu.uptc.presupuesto.model.RubroPresupuestal;
+import edu.uptc.presupuesto.model.RubroPresupuestal.EstadoRubro;
 import edu.uptc.presupuesto.dto.RubroPresupuestalDTO;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,5 @@
 package edu.uptc.presupuesto.model;
 
-import edu.uptc.presupuesto.model.EstadoRubro;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
@@ -36,7 +35,15 @@ public class RubroPresupuestal {
     @Column(length = 20)
     private EstadoRubro estado = EstadoRubro.PENDIENTE;
 
-    // Getters y Setters
+    // Enum for the states of the rubro
+    public enum EstadoRubro {
+        PENDIENTE,
+        EN_EJECUCION,
+        COMPLETADO,
+        SOBREPASADO
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -93,7 +100,7 @@ public class RubroPresupuestal {
         this.estado = estado;
     }
 
-    // Método para calcular porcentaje de ejecución
+    // Method to calculate execution percentage
     public BigDecimal getPorcentajeEjecucion() {
         if (presupuestoTotal.compareTo(BigDecimal.ZERO) == 0) {
             return BigDecimal.ZERO;
@@ -102,4 +109,3 @@ public class RubroPresupuestal {
                 .multiply(BigDecimal.valueOf(100));
     }
 }
-

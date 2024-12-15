@@ -1,7 +1,7 @@
 package edu.uptc.presupuesto.service;
 
-import edu.uptc.presupuesto.model.EstadoRubro;
 import edu.uptc.presupuesto.model.RubroPresupuestal;
+import edu.uptc.presupuesto.model.RubroPresupuestal.EstadoRubro;
 import edu.uptc.presupuesto.dto.RubroPresupuestalDTO;
 import edu.uptc.presupuesto.repository.RubroPresupuestalRepository;
 import edu.uptc.presupuesto.mapper.RubroPresupuestalMapper;
@@ -62,4 +62,42 @@ public class RubroPresupuestalService {
 
         repository.save(rubro);
     }
+    public List<RubroPresupuestalDTO> listarTodos() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public RubroPresupuestalDTO obtenerPorId(Long id) {
+        RubroPresupuestal rubro = repository.findById(id).orElse(null);
+        if (rubro == null) {
+            return null; // O puedes devolver un DTO vacío o con valores predeterminados
+        }
+        return mapper.toDTO(rubro);
+    }
+
+    public RubroPresupuestalDTO actualizarRubro(Long id, RubroPresupuestalDTO rubroActualizado) {
+        RubroPresupuestal rubroExistente = repository.findById(id).orElse(null);
+        if (rubroExistente == null) {
+            return null; // O puedes devolver un DTO vacío o con valores predeterminados
+        }
+
+        // Actualizar campos permitidos
+        rubroExistente.setNombre(rubroActualizado.getNombre());
+        rubroExistente.setPresupuestoTotal(rubroActualizado.getPresupuestoTotal());
+        rubroExistente.setFechaInicio(rubroActualizado.getFechaInicio());
+        rubroExistente.setFechaFin(rubroActualizado.getFechaFin());
+
+        RubroPresupuestal rubroGuardado = repository.save(rubroExistente);
+        return mapper.toDTO(rubroGuardado);
+    }
+
+    public void eliminarRubro(Long id) {
+        if (!repository.existsById(id)) {
+            return; // No hacer nada si el rubro no existe
+        }
+        repository.deleteById(id);
+    }
+
 }

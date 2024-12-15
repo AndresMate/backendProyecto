@@ -45,4 +45,33 @@ public class RubroPresupuestalController {
         service.actualizarEjecucionPresupuestal(rubroId, montoEjecutado);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping
+    @Operation(summary = "Listar todos los rubros")
+    public ResponseEntity<List<RubroPresupuestalDTO>> listarRubros() {
+        return ResponseEntity.ok(service.listarTodos());
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Obtener rubro por ID")
+    public ResponseEntity<RubroPresupuestalDTO> obtenerRubroPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.obtenerPorId(id));
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Actualizar rubro")
+    public ResponseEntity<RubroPresupuestalDTO> actualizarRubro(
+            @PathVariable Long id,
+            @RequestBody RubroPresupuestalDTO rubroActualizado
+    ) {
+        return ResponseEntity.ok(service.actualizarRubro(id, rubroActualizado));
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar rubro")
+    public ResponseEntity<Void> eliminarRubro(@PathVariable Long id) {
+        service.eliminarRubro(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

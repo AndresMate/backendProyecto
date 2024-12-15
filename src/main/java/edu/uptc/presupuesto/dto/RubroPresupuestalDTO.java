@@ -1,6 +1,6 @@
 package edu.uptc.presupuesto.dto;
 
-import edu.uptc.presupuesto.model.EstadoRubro;
+import edu.uptc.presupuesto.model.RubroPresupuestal.EstadoRubro;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -14,9 +14,10 @@ public class RubroPresupuestalDTO {
     private EstadoRubro estado;
     private BigDecimal porcentajeEjecucion;
 
-    // Constructores
+    // Constructors
     public RubroPresupuestalDTO() {}
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -81,7 +82,7 @@ public class RubroPresupuestalDTO {
         this.porcentajeEjecucion = porcentajeEjecucion;
     }
 
-    // Método toString
+    // toString method
     @Override
     public String toString() {
         return "RubroPresupuestalDTO{" +
