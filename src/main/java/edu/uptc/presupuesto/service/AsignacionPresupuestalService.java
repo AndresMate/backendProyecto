@@ -90,4 +90,19 @@ public class AsignacionPresupuestalService {
         }
         repository.deleteById(id);
     }
+
+    public AsignacionPresupuestalDTO actualizarAsignacion(Long id, AsignacionPresupuestalDTO dto) {
+        AsignacionPresupuestal asignacionExistente = repository.findById(id).orElseThrow(() -> new RuntimeException("Asignación no encontrada"));
+
+        asignacionExistente.setRubro(rubroRepository.findById(dto.getRubroId()).orElseThrow(() -> new RuntimeException("Rubro no encontrado")));
+        asignacionExistente.setMontoTotal(dto.getMontoTotal());
+        asignacionExistente.setMontoUtilizado(dto.getMontoUtilizado());
+        asignacionExistente.setMontoDisponible(dto.getMontoDisponible());
+        asignacionExistente.setFechaInicio(dto.getFechaInicio());
+        asignacionExistente.setFechaFin(dto.getFechaFin());
+        asignacionExistente.setEstado(dto.getEstado());
+
+        AsignacionPresupuestal asignacionActualizada = repository.save(asignacionExistente);
+        return mapper.toDTO(asignacionActualizada);
+    }
 }

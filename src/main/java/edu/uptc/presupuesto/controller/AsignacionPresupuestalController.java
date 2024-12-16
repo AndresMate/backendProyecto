@@ -63,4 +63,15 @@ public class AsignacionPresupuestalController {
         }
     }
 
+    @PutMapping("/{id}")
+    @Operation(summary = "Actualizar una asignación presupuestal")
+    public ResponseEntity<Object> actualizarAsignacion(@PathVariable Long id, @RequestBody AsignacionPresupuestalDTO dto) {
+        try {
+            AsignacionPresupuestalDTO asignacionActualizada = service.actualizarAsignacion(id, dto);
+            return ResponseHandler.generateResponse("Asignación actualizada con éxito", HttpStatus.OK, asignacionActualizada);
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+
 }
