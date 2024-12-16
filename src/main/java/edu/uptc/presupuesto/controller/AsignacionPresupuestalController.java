@@ -51,4 +51,16 @@ public class AsignacionPresupuestalController {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar una asignación presupuestal")
+    public ResponseEntity<Object> eliminarAsignacion(@PathVariable Long id) {
+        try {
+            service.eliminarAsignacion(id);
+            return ResponseHandler.generateResponse("Asignación eliminada con éxito", HttpStatus.NO_CONTENT, null);
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+
 }

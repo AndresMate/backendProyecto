@@ -83,4 +83,11 @@ public class AsignacionPresupuestalService {
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    public void eliminarAsignacion(Long id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Asignación no encontrada");
+        }
+        repository.deleteById(id);
+    }
 }
