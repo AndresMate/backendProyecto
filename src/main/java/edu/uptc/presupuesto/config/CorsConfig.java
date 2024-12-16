@@ -14,6 +14,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("http://158.247.122.111:3000"); // Origen del frontend en la nube
         config.addAllowedOrigin("http://localhost:3000"); // Origen del frontend local
+        config.addAllowedOrigin("https://backendproyecto-1l2x.onrender.com"); // Origen del frontend local
 
         config.addAllowedMethod("*"); // Permitir todos los métodos HTTP (GET, POST, etc.)
         config.addAllowedHeader("*"); // Permitir todos los encabezados
